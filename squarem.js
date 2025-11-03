@@ -33,13 +33,13 @@ window.onload = function init() {
             index++;
         }
     });
-
+    document.getElementById("colors_box").addEventListener("change", function() {
+        selectedColorIndex = Number(this.value); 
+    });
+    
     // Print shape with chosen color
     document.getElementById("print_shape").addEventListener("click", function(){
-        console.log("Shape Points:", SHAPE_points);
-        
-
-        // Draw all points with the selected color
+        console.log("Shape Points:", SHAPE_points);      
         drawShape();
     });
 
@@ -75,11 +75,11 @@ function drawShape() {
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     if(SHAPE_points.length > 0) {
-        // Fill vertex buffer
+        
         gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(SHAPE_points));
 
-        // Fill color buffer with the selected color
+       
         var pointColors = [];
         for(var i = 0; i < SHAPE_points.length; i++) {
             pointColors.push(colors[selectedColorIndex]);
@@ -87,8 +87,8 @@ function drawShape() {
         gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
         gl.bufferSubData(gl.ARRAY_BUFFER, 0, flatten(pointColors));
 
-        // Draw points
-        gl.drawArrays(gl.POINTS, 0, SHAPE_points.length);
+        
+        gl.drawArrays(gl.SHAPE_points, 0, SHAPE_points.length);
     }
 }
 
